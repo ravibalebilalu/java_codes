@@ -1,23 +1,34 @@
+/**
+ * This Java program implements a ToDo list application that allows users to manage tasks,
+ * including adding, displaying, removing, and editing tasks. It utilizes LocalDate for date handling
+ * and provides an interactive command-line interface for easy task management.
+ */
+
 import java.util.LinkedList;
 import java.util.Scanner;
  
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+//class for task
 class Task{
    private String title;
     private String description;
     private String status;
     private String due_date;
+
+    //prints the details of task
     void display(){
         System.out.println(
+            "........................\n" +
             "Title :" + title  + "\n" +
             "Description :" +  description+ "\n" +
             "Status :" +  status + "\n" +
-            "Due date :" +  due_date
+            "Due date :" +  due_date + "\n........................"
         );
     }
-    //title
+    //to craete and get title
     public void setTitle(String title){
         this.title = title;
     }
@@ -27,7 +38,7 @@ class Task{
 
      
     
-    //description
+    //to craete and get  description
     public void setDescription(String description){
         this.description = description;
     }
@@ -37,7 +48,7 @@ class Task{
     }
 
      
-    //status
+    //to craete and get  status
     public void setStaus(String status){
         this.status = status;
     }
@@ -47,7 +58,7 @@ class Task{
     }
 
      
-    //due_date
+    //to craete and get due_date
     public void setDueDate(int time_for_task){
        LocalDate dateToday = LocalDate.now();
        LocalDate target_date = dateToday.plusDays(time_for_task);
@@ -60,8 +71,6 @@ class Task{
     public String getDueDate(){
         return due_date;
     }
-
-     
 }
 
 
@@ -69,40 +78,43 @@ class Task{
 
 public class ToDoList{
 
-//add new task
+//method to add new task
 
      static Task  new_task(){
+        //scanner object (integer)
         Scanner selector = new Scanner(System.in);
         Task task = new Task();
         
-
+        //title
         System.out.println("Add title:");
         String title = selector.nextLine();
         task.setTitle(title);
 
+        //description
         System.out.println("Add description:");
         String description = selector.nextLine();
         task.setDescription(description);
 
+        //status
         System.out.println("Add status:");
         String status = selector.nextLine();
         task.setStaus(status);
-
+        
+        //due date
         System.out.println("How many days you plan :");
         int due_date = selector.nextInt();
-        task.setDueDate(due_date);
-
-        
-        
+        task.setDueDate(due_date); 
         return task;
 }
 
     public static void main(String[] args) {
-         
+   
+//scanner object (string)
 Scanner inString = new Scanner(System.in);
+//linkedlist to store tasks
 LinkedList <Task>todolist = new LinkedList<Task>();
 
-
+//set flag to keep running loop to get inputs
 int flag = 1;
  while ((flag == 1) | (flag == 2) | (flag == 3) | (flag == 4) && (flag != 5) ){
 
@@ -115,11 +127,14 @@ Scanner selector = new Scanner(System.in);
  System.out.println("4 for edit tasks");
  System.out.println("5 for exit\n");
 
+ //scanner object (integer)
  int selection = selector.nextInt();
+ //check each inputs 
  flag = selection;
  
 
  if (selection == 1 ){
+    //display all informations
     if (todolist.size() > 0){
     for(Task t:todolist){
         t.display();}
@@ -129,19 +144,24 @@ Scanner selector = new Scanner(System.in);
     }
     
     else if(selection == 2){
+        //adding new task
         todolist.add(new_task());
         
     }
+
+    //remove specific task
     else if (selection == 3){
         System.out.println("You have "+ todolist.size() + " tasks.Which task you want to remove?");
         if (todolist.size() > 0){
+            //initialize a counter to use as index
             int count = 1;
             for(Task t:todolist){
                 System.out.println(count + " : " + t.getTitle());
                 count++;
             }
-         
+         //ask user to enter the index of task
         int task_index = selector.nextInt();
+        //remove the task by specifieng index
         todolist.remove(task_index - 1);
         System.out.println("Selected task is succusfully deleated!");
     }
@@ -149,6 +169,7 @@ Scanner selector = new Scanner(System.in);
             System.out.println("There is no tasks to remove!");
        }
       } else if (selection == 4){
+        //edit the task
         //display the task list
         int count = 1;
         System.out.println("Select the task number :");
@@ -205,12 +226,13 @@ Scanner selector = new Scanner(System.in);
         }
       
     
-     
+     //close the scanner objects with exit.
      if (flag == 5){
         selector.close();
         inString.close();
      }
     }
+    System.out.println("Thank You for using this aplication");
    } 
 }
 
